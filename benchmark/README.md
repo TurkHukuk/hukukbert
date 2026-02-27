@@ -7,7 +7,7 @@ All paths below are repository-root relative.
 
 ## Files
 
-- Dataset: `benchmark/data/hukukbert_v1_cloze.json`
+- Dataset: `benchmark/data/hukukbert_v1_cloze.jsonl`
 - Evaluation script: `benchmark/scripts/cloze_benchmark_test.py`
 
 ## Data Format
@@ -37,11 +37,7 @@ Fields:
 | `gold` | ✅ | Correct answer (must be in `options`) |
 | `metadata` | — | Optional: `law_area`, `difficulty`, etc. |
 
-The dataset ships as a single JSON array. The evaluation script expects **JSONL** (one JSON object per line). Convert first:
-
-```bash
-jq -c '.[]' benchmark/data/hukukbert_v1_cloze.json > benchmark/data/hukukbert_v1_cloze.jsonl
-```
+The dataset ships in **JSONL** format (one JSON object per line).
 
 ## Running the Benchmark
 

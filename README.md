@@ -39,7 +39,7 @@ hukukbert/
 └── benchmark/
     ├── README.md            ← benchmark usage & detailed results
     ├── data/
-    │   └── hukukbert_v1_cloze.json   (750 cloze items)
+    │   └── hukukbert_v1_cloze.jsonl  (750 cloze items)
     └── scripts/
         └── cloze_benchmark_test.py   (evaluation script)
 ```
