@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "Bu benchmark'ı kullanıyorsanız lütfen atıf yapın."
+title: "HukukBERT: A Domain-Specific Language Model for Turkish Legal Text"
+authors:
+  - family-names: Türkoğlu
+    given-names: Tansu
+    email: tansu@turkhukuk.ai
+repository-artifact: "https://raw.githubusercontent.com/TurkHukuk/hukukbert/main/benchmark/data/hukukbert_v1_cloze.json"
+url: "https://github.com/turkhukuk/hukukbert/benchmark"
