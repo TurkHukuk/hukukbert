@@ -70,10 +70,6 @@ HukukBERT serves as the foundation for several downstream Turkish legal NLP task
 - **Party identification** — detecting and classifying parties (kamu, tüzel, gerçek kişi)
 - **Judgment extraction** — extracting structured hüküm from decision text
 
-## Model Access
-
-Model weights are available for research collaboration. Contact: **research@turkhukuk.ai**
-
 ## Citation
 
 If you use this benchmark in your research, please cite:
