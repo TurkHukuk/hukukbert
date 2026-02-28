@@ -524,6 +524,42 @@
             color: var(--accent)
         }
 
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin: 18px 0 32px
+        }
+
+        .chart-grid.train {
+            grid-template-columns: repeat(2, minmax(0, 1fr))
+        }
+
+        .chart-grid.eval {
+            grid-template-columns: repeat(2, minmax(0, 1fr))
+        }
+
+        .chart-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px
+        }
+
+        .chart-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px
+        }
+
+        .chart-card figcaption {
+            font-family: var(--sans);
+            font-size: 12px;
+            color: var(--text2);
+            margin-top: 8px
+        }
+
         .conclusion {
             background: var(--surface);
             border-radius: 8px;
@@ -562,6 +598,10 @@
 
             .mg {
                 grid-template-columns: 1fr 1fr
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr
             }
 
             .rh-card .sv {
@@ -1382,6 +1422,35 @@
                 </section>
                 <p><em>Not: Tam checkpoint listesi için <a href="https://github.com/TurkHukuk/hukukbert">GitHub deposuna</a>
                         başvurabilirsiniz.</em></p>
+                <h3>Eğitim ve Değerlendirme Grafikleri</h3>
+                <section class="chart-grid train">
+                    <figure class="chart-card">
+                        <img src="img/train_loss.svg" alt="HukukBERT eğitim train loss grafiği" loading="lazy">
+                        <figcaption>Train Loss</figcaption>
+                    </figure>
+                    <figure class="chart-card">
+                        <img src="img/train_grad_norm.svg" alt="HukukBERT eğitim gradient norm grafiği" loading="lazy">
+                        <figcaption>Train Grad Norm</figcaption>
+                    </figure>
+                    <figure class="chart-card">
+                        <img src="img/train_learning_rate.svg" alt="HukukBERT eğitim learning rate grafiği" loading="lazy">
+                        <figcaption>Train Learning Rate</figcaption>
+                    </figure>
+                </section>
+                <section class="chart-grid eval">
+                    <figure class="chart-card">
+                        <img src="img/eval_loss.svg" alt="HukukBERT değerlendirme loss grafiği" loading="lazy">
+                        <figcaption>Eval Loss</figcaption>
+                    </figure>
+                    <figure class="chart-card">
+                        <img src="img/eval_samples_per_second.svg" alt="HukukBERT değerlendirme samples per second grafiği" loading="lazy">
+                        <figcaption>Eval Samples Per Second</figcaption>
+                    </figure>
+                    <figure class="chart-card">
+                        <img src="img/eval_steps_per_second.svg" alt="HukukBERT değerlendirme steps per second grafiği" loading="lazy">
+                        <figcaption>Eval Steps Per Second</figcaption>
+                    </figure>
+                </section>
 
         <!-- ══════════════════════════════════════════════ 6 ══ -->
         <h2>Değerlendirme Yöntemi: Hukuki Cloze Testi</h2>
