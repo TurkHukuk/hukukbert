@@ -139,15 +139,22 @@ Full training progression of HukukBERT on this benchmark (n=750).
 | 5000 | 80.53% | [77.55%, 83.21%] | 97.87% | [96.56%, 98.68%] |
 | 4000 | 79.07% | [76.01%, 81.83%] | 97.73% | [96.40%, 98.58%] |
 
-### Baselines
+### Model Comparison
 
 | Model | Top-1 | Top-1 95% CI | Top-3 | Top-3 95% CI |
 |---|---:|---:|---:|---:|
-| dbmdz/bert-base-turkish-128k-cased | 71.87% | [68.54%, 74.97%] | 95.33% | [93.58%, 96.63%] |
-| dbmdz/bert-base-turkish-cased | 64.53% | [61.04%, 67.88%] | 93.60% | [91.62%, 95.14%] |
+| turkhukuk.ai/hukukbert | 83,87% | [81,06% – 86,33%] | 98,80% | [97,74% – 99,37%] |
+| KocLab-Bilkent/BERTurk-Legal | 75,07% | [71,85% – 78,03%] | 96,00% | [94,35% – 97,18%] |
+| dbmdz/bert-base-turkish-128k-cased | 71,87% | [68,54% – 74,97%] | 95,33% | [93,58% – 96,63%] |
+| dbmdz/bert-base-turkish-cased | 64,53% | [61,04% – 67,88%] | 93,60% | [91,62% – 95,14%] |
+| newmindai/Mursit-Large | 62,53% | [59,01% – 65,93%] | 94,40% | [92,52% – 95,83%] |
+| ytu-ce-cosmos/turkish-large-bert-cased | 61,20% | [57,66% – 64,62%] | 91,07% | [88,81% – 92,90%] |
+| boun-tabilab/TabiBERT | 48,40% | [44,84% – 51,98%] | 88,40% | [85,91% – 90,50%] |
+
+Note: The table above reports cross-model comparison values for released models; the checkpoint table above shows the internal training-step sweep for HukukBERT.
 
 ### Observations
 
 - Top-1 accuracy plateaus around checkpoint 20000–22000 (~84.1%), with no meaningful improvement through checkpoint 30500. This suggests the model has saturated on this benchmark by ~20K steps.
 - Top-3 accuracy is remarkably stable across all checkpoints (97.7%–98.9%), indicating the correct answer is almost always in the model's top predictions even early in training.
-- Best Top-1 (84.13%) and best Top-3 (98.93%) come from different checkpoints (22000 vs 24000), though the differences are within confidence intervals.
+- In the checkpoint sweep, best Top-1 (84.13%) and best Top-3 (98.93%) come from different checkpoints (22000 vs 24000), though the differences are within confidence intervals.
