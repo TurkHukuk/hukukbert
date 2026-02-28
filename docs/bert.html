@@ -588,19 +588,19 @@
     <main class="container">
 
         <header>
-            <span class="tag">Teknik Blog · TurkHukuk.ai</span>
-            <h1>HukukBERT: Türk Hukuku İçin Alan-Spesifik Dil Modeli Eğitimi</h1>
+           
+            <h1>HukukBERT - Türk Hukuku için Alan Spesifik Yapay Zeka Modeli</h1>
             <p class="subtitle">21 GB temizlenmiş hukuki corpus üzerinde, gelişmiş maskeleme stratejileriyle eğitilmiş
                 —&nbsp;Türkiye'nin en kapsamlı hukuki dil modeli.</p>
             <p class="meta">
-                <span>TurkHukuk.ai Ekibi</span>
+                <a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai Ekibi</a>
                 <span>Şubat 2026</span>
                 <span><a href="https://github.com/TurkHukuk/hukukbert">GitHub Repo</a></span>
             </p>
         </header>
 
         <!-- ══════════════════════════════════════════════ 1 ══ -->
-        <h2>1. Neden HukukBERT?</h2>
+        <h2>HukukBERT</h2>
         <p>Doğal dil işleme (NLP) alanındaki gelişmeler, hukuk teknolojisi (LegalTech) uygulamalarına önemli kapılar
             açmıştır. Ancak Türk hukuku özelinde mevcut çalışmalar ciddi veri kısıtlarıyla sınırlı kalmıştır. </p>
         <p>Buna karşılık, yurtdışında hukuk alanına özgü daha geniş kapsamlı çalışmalar yapılmıştır. Örneğin İngilizce
@@ -627,7 +627,7 @@
         </section>
 
         <!-- ══════════════════════════════════════════════ 2 ══ -->
-        <h2>2. Sonuçlar</h2>
+        <h2>Sonuçlar</h2>
         <p>Eğitilen model, hukuki kavram tahmininde (Hukuki Cloze Testi) genel amaçlı Türkçe BERT modellerine ve diğer
             alan-spesifik modellere karşı kayda değer bir üstünlük sergilemektedir:</p>
 
@@ -790,8 +790,8 @@
         </section>
 
         <!-- ══════════════════════════════════════════════ 3 ══ -->
-        <h2>3. Veri Hazırlama</h2>
-        <h3>3.1. Veri Kaynakları</h3>
+        <h2>Veri Hazırlama</h2>
+        <h3>Veri Kaynakları</h3>
         <p>Corpus oluşturulurken aşağıdaki birincil kaynaklardan yararlanılmıştır:</p>
         <ul class="il">
             <li>İçtihat ve mevzuat verileri — <a href="https://mevzuat.adalet.gov.tr">mevzuat.adalet.gov.tr</a></li>
@@ -800,7 +800,7 @@
             <li>Çeşitli akademik kaynaklar (tezler, makaleler)</li>
         </ul>
 
-        <h3>3.2. Ham Corpus</h3>
+        <h3>Ham Corpus</h3>
         <section class="table-wrapper">
             <table>
                 <caption>Tablo 1 — Ham Corpus Dağılımı</caption>
@@ -902,7 +902,7 @@
             </table>
         </section>
 
-        <h3>3.3. Mükerrer ve Benzer Belgelerin Temizlenmesi</h3>
+        <h3>Mükerrer ve Benzer Belgelerin Temizlenmesi</h3>
         <p>Hukuki belgeler, kalıp ifadeler ("Gereği düşünüldü", "Aşağıdaki karar verilmiştir" vb.) ve biçimsel tekrarlar
             nedeniyle yüksek oranda benzerlik göstermektedir. MinHash LSH yöntemiyle (<code>num_perm=256</code>,
             <code>threshold=0.90</code>) benzer belgeler tespit edilerek corpus'tan çıkarılmıştır.
@@ -1011,7 +1011,7 @@
         <aside class="note"><strong>Önemli Bulgu:</strong> Yaklaşık <strong>2 milyon Yargıtay kararı</strong> birebir aynı
             veya yüksek oranda benzer olarak tespit edilmiştir.</aside>
 
-        <h3>3.4. Veri Dengeleme (Upscale / Downscale)</h3>
+        <h3>Veri Dengeleme (Upscale / Downscale)</h3>
         <p>Upscale/downscale işlemi uygulanarak kaynaklar arası denge kurulmuştur.
             Yargıtay
             kararları ~14.5&nbsp;GB'dan ~3.5&nbsp;GB'a daraltılırken; makale, tez ve mevzuat kaynakları çoğaltılarak
@@ -1019,9 +1019,9 @@
             corpus <strong>~19&nbsp;GB / ~2.3M belge</strong> olarak dengelenmiştir.</p>
 
         <!-- ══════════════════════════════════════════════ 4 ══ -->
-        <h2>4. Tokenizer Eğitimi</h2>
+        <h2>Tokenizer Eğitimi</h2>
 
-        <h3>4.1. Neden Yeni Tokenizer?</h3>
+        <h3>Neden Yeni Tokenizer?</h3>
 
         <p><a href="https://sozluk.adalet.gov.tr/">Adalet Bakanlığı Hukuk Sözlüğü</a>'nden elde edilen hukuki
             terimler de dahil edilerek yeni bir tokenizer eğitilmiştir. <a href="https://huggingface.co/docs/transformers/en/tokenizer_summary">WordPiece ve Unigram</a>
@@ -1030,7 +1030,7 @@
             denemeleri
             yapılmış ve nihai olarak <strong>48K WordPiece</strong> tokenizer seçilmiştir.</p>
 
-        <h3>4.2. Tokenizer Karşılaştırması</h3>
+        <h3>Tokenizer Karşılaştırması</h3>
         <section class="table-wrapper">
             <table>
                 <caption>Tablo 3 — Tokenizer Verimlilik Karşılaştırması (Hukuki Metin Üzerinde)</caption>
@@ -1096,7 +1096,7 @@
             </table>
         </section>
 
-        <h3>4.3. Tokenizasyon Örnekleri</h3>
+        <h3>Tokenizasyon Örnekleri</h3>
         <section class="code-block">
             <h3 class="ch">Tokenizasyon Karşılaştırması — Hukuki İfadeler</h3>
             <strong style="color:#e8c9a0">BÖLGE ADLİYE MAHKEMESİ</strong>
@@ -1137,8 +1137,8 @@
         </section>
 
         <!-- ══════════════════════════════════════════════ 5 ══ -->
-        <h2>5. Model Eğitimi</h2>
-        <h3>5.1. Temel Model ve DAPT Stratejisi</h3>
+        <h2>Model Eğitimi</h2>
+        <h3>Temel Model ve DAPT Stratejisi</h3>
         <p>
             <em>Domain-Adaptive Pre-Training</em> (DAPT) yöntem ile ilerlenmiş, tokenizer'ın değişmiş olması
             model
@@ -1216,7 +1216,7 @@
             </table>
         </section>
 
-        <h3>5.2. İnovatif Maskeleme Stratejileri</h3>
+        <h3>İnovatif Maskeleme Stratejileri</h3>
         <section class="mg">
             <div class="mc"><span class="pct">20%</span><span class="tp2">Whole Word</span><span class="ds">Tüm alt
                     tokenlar
@@ -1241,7 +1241,7 @@
             maskeleme
             bütçesinin %30'u bu terimlere ayrılmıştır.</p>
 
-        <h3>5.3. Eğitim Parametreleri</h3>
+        <h3>Eğitim Parametreleri</h3>
         <p>Eğitim, <strong>NVIDIA H200 SXM</strong> üzerinde toplam <strong>19 saat</strong> sürmüştür.</p>
         <section class="pg">
             <p class="pi">
@@ -1285,9 +1285,106 @@
                 <span class="pv">2</span>
             </p>
         </section>
+                <h3>Checkpoint Bazında Performans İlerlemesi</h3>
+                <p>Eğitim sürecinde alınan checkpoint'ler aşağıda sunulmuştur:</p>
+                <section class="table-wrapper">
+                    <table>
+                        <caption>Tablo 6 — Checkpoint Bazında Performans (N=750)</caption>
+                        <thead>
+                            <tr>
+                                <th>Checkpoint</th>
+                                <th class="num">Top-1</th>
+                                <th class="num">Top-1 95% CI</th>
+                                <th class="num">Top-3</th>
+                                <th class="num">Top-3 95% CI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row-hl">
+                                <td><strong>checkpoint-22000</strong></td>
+                                <td class="num"><strong>84,13%</strong></td>
+                                <td class="num">[81,35% – 86,57%]</td>
+                                <td class="num">98,80%</td>
+                                <td class="num">[97,74% – 99,37%]</td>
+                            </tr>
+                            <tr class="row-hl">
+                                <td><strong>checkpoint-21500</strong></td>
+                                <td class="num"><strong>84,13%</strong></td>
+                                <td class="num">[81,35% – 86,57%]</td>
+                                <td class="num">98,80%</td>
+                                <td class="num">[97,74% – 99,37%]</td>
+                            </tr>
+                            <tr class="row-hl">
+                                <td><strong>checkpoint-20500</strong></td>
+                                <td class="num"><strong>84,13%</strong></td>
+                                <td class="num">[81,35% – 86,57%]</td>
+                                <td class="num">98,67%</td>
+                                <td class="num">[97,56% – 99,27%]</td>
+                            </tr>
+                            <tr class="row-hl">
+                                <td><strong>checkpoint-20000</strong></td>
+                                <td class="num"><strong>84,13%</strong></td>
+                                <td class="num">[81,35% – 86,57%]</td>
+                                <td class="num">98,67%</td>
+                                <td class="num">[97,56% – 99,27%]</td>
+                            </tr>
+                            <tr>
+                                <td>checkpoint-29000</td>
+                                <td class="num">83,87%</td>
+                                <td class="num">[81,06% – 86,33%]</td>
+                                <td class="num">98,67%</td>
+                                <td class="num">[97,56% – 99,27%]</td>
+                            </tr>
+                            <tr>
+                                <td>checkpoint-28000 (yayınlanan)</td>
+                                <td class="num">83,87%</td>
+                                <td class="num">[81,06% – 86,33%]</td>
+                                <td class="num">98,80%</td>
+                                <td class="num">[97,74% – 99,37%]</td>
+                            </tr>
+                            <tr>
+                                <td>checkpoint-26000</td>
+                                <td class="num">83,87%</td>
+                                <td class="num">[81,06% – 86,33%]</td>
+                                <td class="num">98,80%</td>
+                                <td class="num">[97,74% – 99,37%]</td>
+                            </tr>
+                            <tr>
+                                <td>Final model</td>
+                                <td class="num">83,60%</td>
+                                <td class="num">[80,78% – 86,08%]</td>
+                                <td class="num">98,93%</td>
+                                <td class="num">[97,91% – 99,46%]</td>
+                            </tr>
+                            <tr>
+                                <td>checkpoint-10500</td>
+                                <td class="num">82,53%</td>
+                                <td class="num">[79,65% – 85,08%]</td>
+                                <td class="num">98,40%</td>
+                                <td class="num">[97,22% – 99,08%]</td>
+                            </tr>
+                            <tr>
+                                <td>checkpoint-8000</td>
+                                <td class="num">80,67%</td>
+                                <td class="num">[77,69% – 83,33%]</td>
+                                <td class="num">98,00%</td>
+                                <td class="num">[96,73% – 98,78%]</td>
+                            </tr>
+                            <tr>
+                                <td>checkpoint-4000</td>
+                                <td class="num">79,07%</td>
+                                <td class="num">[76,01% – 81,83%]</td>
+                                <td class="num">97,73%</td>
+                                <td class="num">[96,40% – 98,58%]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <p><em>Not: Tam checkpoint listesi için <a href="https://github.com/TurkHukuk/hukukbert">GitHub deposuna</a>
+                        başvurabilirsiniz.</em></p>
 
         <!-- ══════════════════════════════════════════════ 6 ══ -->
-        <h2>6. Değerlendirme Yöntemi: Hukuki Cloze Testi</h2>
+        <h2>Değerlendirme Yöntemi: Hukuki Cloze Testi</h2>
         <p>Model performansını ölçmek için, hukuki kavram tahmine dayalı özel bir <em>cloze test</em> benchmark'ı
             oluşturulmuştur. 
         </p><p>Benchmark veri seti açık kaynak olarak erişilebilir: <a href="https://github.com/TurkHukuk/hukukbert/blob/main/benchmark/data/hukukbert_v1_cloze.json">hukukbert_v1_cloze.json</a>
@@ -1317,106 +1414,10 @@
         </p>
 
 
-        <h3>6.1. Checkpoint Bazında Performans İlerlemesi</h3>
-        <p>Eğitim sürecinde alınan checkpoint'ler aşağıda sunulmuştur:</p>
-        <section class="table-wrapper">
-            <table>
-                <caption>Tablo 6 — Checkpoint Bazında Performans (N=750)</caption>
-                <thead>
-                    <tr>
-                        <th>Checkpoint</th>
-                        <th class="num">Top-1</th>
-                        <th class="num">Top-1 95% CI</th>
-                        <th class="num">Top-3</th>
-                        <th class="num">Top-3 95% CI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="row-hl">
-                        <td><strong>checkpoint-22000</strong></td>
-                        <td class="num"><strong>84,13%</strong></td>
-                        <td class="num">[81,35% – 86,57%]</td>
-                        <td class="num">98,80%</td>
-                        <td class="num">[97,74% – 99,37%]</td>
-                    </tr>
-                    <tr class="row-hl">
-                        <td><strong>checkpoint-21500</strong></td>
-                        <td class="num"><strong>84,13%</strong></td>
-                        <td class="num">[81,35% – 86,57%]</td>
-                        <td class="num">98,80%</td>
-                        <td class="num">[97,74% – 99,37%]</td>
-                    </tr>
-                    <tr class="row-hl">
-                        <td><strong>checkpoint-20500</strong></td>
-                        <td class="num"><strong>84,13%</strong></td>
-                        <td class="num">[81,35% – 86,57%]</td>
-                        <td class="num">98,67%</td>
-                        <td class="num">[97,56% – 99,27%]</td>
-                    </tr>
-                    <tr class="row-hl">
-                        <td><strong>checkpoint-20000</strong></td>
-                        <td class="num"><strong>84,13%</strong></td>
-                        <td class="num">[81,35% – 86,57%]</td>
-                        <td class="num">98,67%</td>
-                        <td class="num">[97,56% – 99,27%]</td>
-                    </tr>
-                    <tr>
-                        <td>checkpoint-29000</td>
-                        <td class="num">83,87%</td>
-                        <td class="num">[81,06% – 86,33%]</td>
-                        <td class="num">98,67%</td>
-                        <td class="num">[97,56% – 99,27%]</td>
-                    </tr>
-                    <tr>
-                        <td>checkpoint-28000 (yayınlanan)</td>
-                        <td class="num">83,87%</td>
-                        <td class="num">[81,06% – 86,33%]</td>
-                        <td class="num">98,80%</td>
-                        <td class="num">[97,74% – 99,37%]</td>
-                    </tr>
-                    <tr>
-                        <td>checkpoint-26000</td>
-                        <td class="num">83,87%</td>
-                        <td class="num">[81,06% – 86,33%]</td>
-                        <td class="num">98,80%</td>
-                        <td class="num">[97,74% – 99,37%]</td>
-                    </tr>
-                    <tr>
-                        <td>Final model</td>
-                        <td class="num">83,60%</td>
-                        <td class="num">[80,78% – 86,08%]</td>
-                        <td class="num">98,93%</td>
-                        <td class="num">[97,91% – 99,46%]</td>
-                    </tr>
-                    <tr>
-                        <td>checkpoint-10500</td>
-                        <td class="num">82,53%</td>
-                        <td class="num">[79,65% – 85,08%]</td>
-                        <td class="num">98,40%</td>
-                        <td class="num">[97,22% – 99,08%]</td>
-                    </tr>
-                    <tr>
-                        <td>checkpoint-8000</td>
-                        <td class="num">80,67%</td>
-                        <td class="num">[77,69% – 83,33%]</td>
-                        <td class="num">98,00%</td>
-                        <td class="num">[96,73% – 98,78%]</td>
-                    </tr>
-                    <tr>
-                        <td>checkpoint-4000</td>
-                        <td class="num">79,07%</td>
-                        <td class="num">[76,01% – 81,83%]</td>
-                        <td class="num">97,73%</td>
-                        <td class="num">[96,40% – 98,58%]</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <p><em>Not: Tam checkpoint listesi için <a href="https://github.com/TurkHukuk/hukukbert">GitHub deposuna</a>
-                başvurabilirsiniz.</em></p>
+
 
         <!-- ══════════════════════════════════════════════ 7 ══ -->
-        <h2>7. Model Performansı — Tüm Modeller</h2>
+        <h2>Model Performansı — Tüm Modeller</h2>
         <p>HukukBERT, yalnızca genel amaçlı BERTurk modellerini değil, diğer alan-spesifik Türkçe modelleri de önemli
             bir
             farkla geride bırakmıştır:</p>
@@ -1487,7 +1488,7 @@
         </section>
 
         <!-- ══════════════════════════════════════════════ 8 ══ -->
-        <h2>8. Hukuki Cloze Testi Örnekleri</h2>
+        <h2>Hukuki Cloze Testi Örnekleri</h2>
         <p>Aşağıdaki örnekler, farklı hukuk alanlarından seçilmiş sorularda tüm modellerin performansını göstermektedir:
         </p>
 
@@ -1749,8 +1750,8 @@
 
         <!-- ══════════════════════════════════════════════ 9 ══ -->
         <section class="conclusion">
-            <h2 style="margin-top:0;border:none;padding:0">9. Sonuç</h2>
-            <p>TurkHukuk.ai ekibi olarak, Türkiye'de bu ölçekte ilk kez gerçekleştirilen bu çalışmayla 21&nbsp;GB
+            <h2 style="margin-top:0;border:none;padding:0"></h2>
+            <p><a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai</a> ekibi olarak, Türkiye'de bu ölçekte ilk kez gerçekleştirilen bu çalışmayla 21&nbsp;GB
                 temizlenmiş
                 hukuki corpus kullanılarak <a href="https://github.com/TurkHukuk/hukukbert">HukukBERT</a> modeli
                 eğitilmiştir.
@@ -1765,7 +1766,7 @@
         </section>
 
         <footer>
-            <p>© 2026 TurkHukuk.ai · <a href="https://github.com/TurkHukuk/hukukbert">GitHub</a></p>
+            <p>© 2026 <a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai</a> · <a href="https://github.com/TurkHukuk/hukukbert">GitHub</a></p>
         </footer>
 
     </main>
