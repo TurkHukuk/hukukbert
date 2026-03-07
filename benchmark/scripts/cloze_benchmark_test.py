@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Copyright (c) 2026 TurkHukuk.ai
 
 
 import argparse
@@ -12,7 +11,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
 import torch
-from transformers import AutoTokenizer, AutoModelForMaskedLM, PreTrainedTokenizer
+from transformers import AutoConfig, AutoTokenizer, AutoModelForMaskedLM, PreTrainedTokenizer
 from tqdm import tqdm
 
 # Setup logging
@@ -24,6 +23,22 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 Z_95 = 1.959963984540054
+
+MODERNBERT_NAME_HINTS = (
+    "modernbert",
+    "mursit",
+    "tabibert",
+)
+
+# Keep benchmark_mlm.py aliases explicitly covered as well.
+MODERNBERT_EXACT_NAMES = {
+    "TabiBERT",
+    "boun-tabilab/TabiBERT",
+    "Mursit-Base",
+    "newmindai/Mursit-Base",
+    "Mursit-Large",
+    "newmindai/Mursit-Large",
+}
 
 def load_dataset(path):
     items = []
@@ -66,6 +81,31 @@ def resolve_device(device_arg: str) -> str:
         if hasattr(torch.backends, "mps") and torch.backends.mps.is_available(): return "mps"
         return "cpu"
     return device_arg
+
+
+def is_modernbert_model(model_name_or_path: str) -> bool:
+    if model_name_or_path in MODERNBERT_EXACT_NAMES:
+        return True
+
+    lowered = model_name_or_path.lower()
+    if any(hint in lowered for hint in MODERNBERT_NAME_HINTS):
+        return True
+
+    try:
+        cfg = AutoConfig.from_pretrained(model_name_or_path)
+    except Exception:
+        return False
+
+    cfg_class_name = cfg.__class__.__name__.lower()
+    if "modernbert" in cfg_class_name:
+        return True
+
+    model_type = str(getattr(cfg, "model_type", "")).lower()
+    if model_type == "modernbert":
+        return True
+
+    architectures = getattr(cfg, "architectures", []) or []
+    return any("modernbert" in str(arch).lower() for arch in architectures)
 
 
 def wilson_interval(successes: int, total: int, z: float = Z_95) -> Tuple[float, float]:
@@ -166,21 +206,6 @@ def prepare_masked_input(sentence: str, num_masks: int, tokenizer: PreTrainedTok
     return sentence.replace("[MASK]", replacement, 1)
 
 
-def should_prepend_space(tokenizer: PreTrainedTokenizer) -> bool:
-    """Return True only for tokenizers where leading-space markers matter."""
-    model_type = (getattr(tokenizer, "model_type", "") or "").lower()
-    if model_type in {"roberta", "gpt2", "bart"}:
-        return True
-
-    backend = getattr(tokenizer, "backend_tokenizer", None)
-    pre_tokenizer = getattr(backend, "pre_tokenizer", None)
-    if pre_tokenizer is None:
-        return False
-
-    cls_name = pre_tokenizer.__class__.__name__.lower()
-    return "bytelevel" in cls_name
-
-
 def ensure_padding_token(tokenizer: PreTrainedTokenizer) -> bool:
     """
     Ensure tokenizer has a padding token.
@@ -203,28 +228,108 @@ def ensure_padding_token(tokenizer: PreTrainedTokenizer) -> bool:
     return True
 
 
-def build_option_map(
+def build_option_variants(
     tokenizer: PreTrainedTokenizer,
     sentence: str,
     options: List[str],
-) -> List[Tuple[str, List[int]]]:
-    """Tokenize options with tokenizer-aware whitespace handling."""
-    needs_space = " [MASK]" in sentence
-    use_prefix_space = needs_space and should_prepend_space(tokenizer)
+    max_seq_length: int,
+) -> List[Dict[str, object]]:
+    """
+    Build per-option masked encodings by tokenizing the fully filled sentence and
+    masking exactly the tokens that overlap the option span.
+    This avoids context-boundary leakage (option absorbing right-context pieces).
+    """
+    mask_placeholder = "[MASK]"
+    if mask_placeholder not in sentence:
+        return []
+    if tokenizer.mask_token_id is None:
+        return []
 
-    option_map: List[Tuple[str, List[int]]] = []
+    left, right = sentence.split(mask_placeholder, 1)
+    mask_token_id = int(tokenizer.mask_token_id)
+    variants: List[Dict[str, object]] = []
+
     for opt in options:
         clean_opt = opt.strip()
-        if use_prefix_space and not clean_opt.startswith(" "):
-            opt_to_tokenize = " " + clean_opt
-        else:
-            opt_to_tokenize = clean_opt
+        if not clean_opt:
+            continue
+        filled = left + clean_opt + right
 
-        opt_ids = tokenizer.encode(opt_to_tokenize, add_special_tokens=False)
+        # Fast-path: derive mask span from the fully-filled sentence tokenization.
+        try:
+            enc = tokenizer(
+                filled,
+                add_special_tokens=True,
+                truncation=True,
+                max_length=max_seq_length,
+                return_attention_mask=True,
+                return_offsets_mapping=True,
+            )
+            input_ids = [int(x) for x in enc.get("input_ids", [])]
+            attention_mask = [int(x) for x in enc.get("attention_mask", [1] * len(input_ids))]
+            offsets = list(enc.get("offset_mapping", []))
+        except Exception:
+            input_ids = []
+            attention_mask = []
+            offsets = []
+
+        if input_ids and offsets and len(input_ids) == len(offsets):
+            span_start = len(left)
+            span_end = span_start + len(clean_opt)
+            mask_positions = []
+            for idx, (start, end) in enumerate(offsets):
+                s = int(start)
+                e = int(end)
+                if e <= s:
+                    continue
+                if s < span_end and e > span_start:
+                    mask_positions.append(idx)
+
+            if not mask_positions:
+                continue
+
+            target_ids = [int(input_ids[p]) for p in mask_positions]
+            masked_input_ids = list(input_ids)
+            for pos in mask_positions:
+                masked_input_ids[pos] = mask_token_id
+
+            row: Dict[str, object] = {
+                "option": opt,
+                "input_ids": masked_input_ids,
+                "attention_mask": attention_mask,
+                "mask_positions": mask_positions,
+                "target_ids": target_ids,
+            }
+            token_type_ids = enc.get("token_type_ids")
+            if token_type_ids is not None and len(token_type_ids) == len(masked_input_ids):
+                row["token_type_ids"] = [int(x) for x in token_type_ids]
+            variants.append(row)
+            continue
+
+        # Slow-tokenizer fallback (no offsets): keep existing behavior.
+        opt_ids = tokenizer.encode(clean_opt, add_special_tokens=False)
         if not opt_ids:
             continue
-        option_map.append((opt, opt_ids))
-    return option_map
+        enc_masked = encode_masked_sentence(tokenizer, sentence, len(opt_ids), max_seq_length)
+        if enc_masked is None:
+            continue
+        input_ids = [int(x) for x in enc_masked["input_ids"]]
+        mask_positions = [i for i, tok_id in enumerate(input_ids) if int(tok_id) == mask_token_id]
+        if len(mask_positions) != len(opt_ids):
+            continue
+        row = {
+            "option": opt,
+            "input_ids": input_ids,
+            "attention_mask": [int(x) for x in enc_masked.get("attention_mask", [1] * len(input_ids))],
+            "mask_positions": mask_positions,
+            "target_ids": [int(x) for x in opt_ids],
+        }
+        token_type_ids = enc_masked.get("token_type_ids")
+        if token_type_ids is not None and len(token_type_ids) == len(input_ids):
+            row["token_type_ids"] = [int(x) for x in token_type_ids]
+        variants.append(row)
+
+    return variants
 
 
 def cap_pll_variant_batch_size(
@@ -364,47 +469,65 @@ def score_options_independent_batch(
     vocab_per_item: List[List[Tuple[str, float]]] = [[] for _ in batch_items]
     vocab_candidates: Dict[int, Tuple[int, List[Tuple[str, float]]]] = {}
 
-    # Group by tokenized option length so each item-length pair needs one forward pass.
-    length_payloads: Dict[int, List[Tuple[int, List[Tuple[str, List[int]]], Dict[str, List[int]]]]] = defaultdict(list)
+    packed_options: List[Dict[str, object]] = []
     for idx, item in enumerate(batch_items):
         sentence = str(item["sentence"])
         options = list(item["options"])  # type: ignore[arg-type]
-        option_map = build_option_map(tokenizer, sentence, options)
-        if not option_map:
-            continue
-        grouped: Dict[int, List[Tuple[str, List[int]]]] = defaultdict(list)
-        for opt_text, opt_ids in option_map:
-            grouped[len(opt_ids)].append((opt_text, opt_ids))
-        for length, group in grouped.items():
-            enc = encode_masked_sentence(tokenizer, sentence, length, max_seq_length)
-            if enc is not None:
-                length_payloads[length].append((idx, group, enc))
+        variants = build_option_variants(tokenizer, sentence, options, max_seq_length=max_seq_length)
+        for variant in variants:
+            row: Dict[str, object] = {
+                "input_ids": variant["input_ids"],
+                "attention_mask": variant["attention_mask"],
+                "_item_idx": idx,
+                "_opt_text": str(variant["option"]),
+                "_mask_positions": list(variant["mask_positions"]),  # type: ignore[arg-type]
+                "_target_ids": list(variant["target_ids"]),  # type: ignore[arg-type]
+            }
+            if "token_type_ids" in variant:
+                row["token_type_ids"] = variant["token_type_ids"]
+            packed_options.append(row)
+
+    if not packed_options:
+        if need_vocab:
+            vocab_per_item = batched_vocab_predictions(
+                model,
+                tokenizer,
+                batch_items,
+                device,
+                max_seq_length=max_seq_length,
+                topk=vocab_topk,
+            )
+        return scores_per_item, vocab_per_item
 
     with torch.inference_mode():
-        for length, payloads in length_payloads.items():
-            model_inputs = [p[2] for p in payloads]
+        option_batch_size = max(1, min(256, len(packed_options)))
+        for start in range(0, len(packed_options), option_batch_size):
+            chunk = packed_options[start:start + option_batch_size]
+            model_inputs = [
+                {k: v for k, v in row.items() if not k.startswith("_")}
+                for row in chunk
+            ]
             inputs = tokenizer.pad(model_inputs, return_tensors="pt", padding=True).to(device)
-            outputs = model(**inputs)
-            logits = outputs.logits
-            input_ids = inputs["input_ids"]
-            mask_matrix = input_ids == tokenizer.mask_token_id
+            logits = model(**inputs).logits
 
-            for b_idx, (item_idx, group, _) in enumerate(payloads):
-                mask_positions = torch.where(mask_matrix[b_idx])[0]
-                if int(mask_positions.numel()) != length:
+            for row_idx, row in enumerate(chunk):
+                item_idx = int(row["_item_idx"])
+                opt_text = str(row["_opt_text"])
+                mask_positions = [int(x) for x in row["_mask_positions"]]  # type: ignore[index]
+                target_ids = [int(x) for x in row["_target_ids"]]  # type: ignore[index]
+                if not mask_positions or len(mask_positions) != len(target_ids):
                     continue
-                mask_logits = logits[b_idx, mask_positions, :]
+                length = len(mask_positions)
+                pos_tensor = torch.tensor(mask_positions, device=logits.device, dtype=torch.long)
+                target_tensor = torch.tensor(target_ids, device=logits.device, dtype=torch.long)
+                mask_logits = logits[row_idx, pos_tensor, :]
                 log_probs = torch.log_softmax(mask_logits, dim=-1)
-                row_idx = torch.arange(length, device=log_probs.device)
+                token_rows = torch.arange(length, device=log_probs.device, dtype=torch.long)
+                token_log_probs = log_probs[token_rows, target_tensor]
+                total_log_prob = float(token_log_probs.sum().item())
+                scores_per_item[item_idx][opt_text] = total_log_prob / length
 
-                for opt_text, opt_ids in group:
-                    target_ids = torch.tensor(opt_ids, device=log_probs.device)
-                    token_log_probs = log_probs[row_idx, target_ids]
-                    total_log_prob = float(token_log_probs.sum().item())
-                    scores_per_item[item_idx][opt_text] = total_log_prob / length
-                if need_vocab and int(mask_positions.numel()) > 0:
-                    # Reuse existing logits for vocab debug output:
-                    # prefer length==1 context; otherwise fallback to first available length.
+                if need_vocab:
                     first_mask_logits = mask_logits[0, :]
                     probs = torch.softmax(first_mask_logits, dim=-1)
                     values, indices = torch.topk(probs, vocab_topk)
@@ -463,45 +586,35 @@ def score_options_pll_batch(
     for item_idx, item in enumerate(batch_items):
         sentence = str(item["sentence"])
         options = list(item["options"])  # type: ignore[arg-type]
-        option_map = build_option_map(tokenizer, sentence, options)
-        if not option_map:
-            continue
-        grouped: Dict[int, List[Tuple[str, List[int]]]] = defaultdict(list)
-        for opt_text, opt_ids in option_map:
-            grouped[len(opt_ids)].append((opt_text, opt_ids))
-
-        for length, group in grouped.items():
-            enc = encode_masked_sentence(tokenizer, sentence, length, max_seq_length)
-            if enc is None:
+        variants = build_option_variants(tokenizer, sentence, options, max_seq_length=max_seq_length)
+        for variant in variants:
+            base_ids = [int(x) for x in variant["input_ids"]]  # type: ignore[index]
+            base_attn = [int(x) for x in variant["attention_mask"]]  # type: ignore[index]
+            base_tti = [int(x) for x in variant["token_type_ids"]] if "token_type_ids" in variant else None
+            mask_positions = [int(x) for x in variant["mask_positions"]]  # type: ignore[index]
+            target_ids = [int(x) for x in variant["target_ids"]]  # type: ignore[index]
+            if not mask_positions or len(mask_positions) != len(target_ids):
                 continue
-            base_ids = enc["input_ids"]
-            base_attn = enc.get("attention_mask", [1] * len(base_ids))
-            base_tti = enc.get("token_type_ids")
-            mask_positions = [i for i, tok_id in enumerate(base_ids) if tok_id == mask_token_id]
-            if len(mask_positions) != length:
-                continue
+            opt_text = str(variant["option"])
 
-            for opt_text, opt_ids in group:
-                if len(opt_ids) != length:
-                    continue
-                filled_ids = base_ids.copy()
-                for pos, target_id in zip(mask_positions, opt_ids):
-                    filled_ids[pos] = int(target_id)
+            filled_ids = base_ids.copy()
+            for pos, target_id in zip(mask_positions, target_ids):
+                filled_ids[pos] = int(target_id)
 
-                for pos, target_id in zip(mask_positions, opt_ids):
-                    variant_ids = filled_ids.copy()
-                    variant_ids[pos] = mask_token_id
-                    row: Dict[str, object] = {
-                        "input_ids": variant_ids,
-                        "attention_mask": base_attn.copy(),
-                        "_item_idx": item_idx,
-                        "_opt_text": opt_text,
-                        "_target_id": int(target_id),
-                        "_mask_pos": int(pos),
-                    }
-                    if base_tti is not None:
-                        row["token_type_ids"] = base_tti.copy()
-                    packed_variants.append(row)
+            for pos, target_id in zip(mask_positions, target_ids):
+                variant_ids = filled_ids.copy()
+                variant_ids[pos] = mask_token_id
+                row: Dict[str, object] = {
+                    "input_ids": variant_ids,
+                    "attention_mask": base_attn.copy(),
+                    "_item_idx": item_idx,
+                    "_opt_text": opt_text,
+                    "_target_id": int(target_id),
+                    "_mask_pos": int(pos),
+                }
+                if base_tti is not None:
+                    row["token_type_ids"] = base_tti.copy()
+                packed_variants.append(row)
 
     if not packed_variants:
         return scores_per_item
@@ -542,83 +655,71 @@ def score_options(
     scoring_mode: str = "independent",
 ) -> Dict[str, float]:
     model.eval()
-    option_map = build_option_map(tokenizer, sentence, options)
-
-    if not option_map:
+    variants = build_option_variants(tokenizer, sentence, options, max_seq_length=max_seq_length)
+    if not variants:
         return {}
-
-    length_groups = defaultdict(list)
-    for opt_text, opt_ids in option_map:
-        length_groups[len(opt_ids)].append((opt_text, opt_ids))
 
     scores = {}
 
     with torch.inference_mode():
-        for length, group in length_groups.items():
-            enc = encode_masked_sentence(tokenizer, sentence, length, max_seq_length)
-            if enc is None:
+        for variant in variants:
+            opt_text = str(variant["option"])
+            mask_positions = [int(x) for x in variant["mask_positions"]]  # type: ignore[index]
+            target_ids = [int(x) for x in variant["target_ids"]]  # type: ignore[index]
+            if not mask_positions or len(mask_positions) != len(target_ids):
                 continue
+            length = len(mask_positions)
+            enc: Dict[str, List[int]] = {
+                "input_ids": list(variant["input_ids"]),  # type: ignore[arg-type]
+                "attention_mask": list(variant["attention_mask"]),  # type: ignore[arg-type]
+            }
+            if "token_type_ids" in variant:
+                enc["token_type_ids"] = list(variant["token_type_ids"])  # type: ignore[arg-type]
             inputs = tokenizer.pad([enc], return_tensors="pt", padding=True).to(device)
-            input_ids = inputs["input_ids"]
-
-            mask_token_id = tokenizer.mask_token_id
-            mask_positions = torch.where(input_ids[0] == mask_token_id)[0]
-
-            # Safety check: Mask count mismatch
-            if int(mask_positions.numel()) != length:
-                continue
-
-            mask_positions_list = [int(x) for x in mask_positions.tolist()]
 
             if scoring_mode == "independent":
-                outputs = model(**inputs)
-                logits = outputs.logits
-                mask_logits = logits[0, mask_positions, :]
+                logits = model(**inputs).logits
+                pos_idx = torch.tensor(mask_positions, device=logits.device, dtype=torch.long)
+                target_tensor = torch.tensor(target_ids, device=logits.device, dtype=torch.long)
+                mask_logits = logits[0, pos_idx, :]
                 log_probs = torch.log_softmax(mask_logits, dim=-1)
-                row_idx = torch.arange(length, device=log_probs.device)
-
-                for opt_text, opt_ids in group:
-                    target_ids = torch.tensor(opt_ids, device=log_probs.device)
-                    token_log_probs = log_probs[row_idx, target_ids]
-                    total_log_prob = token_log_probs.sum().item()
-                    scores[opt_text] = total_log_prob / length
+                row_idx = torch.arange(length, device=log_probs.device, dtype=torch.long)
+                token_log_probs = log_probs[row_idx, target_tensor]
+                total_log_prob = float(token_log_probs.sum().item())
+                scores[opt_text] = total_log_prob / length
                 continue
 
             # Pseudo-log-likelihood mode:
             # Score each option by masking one target token at a time, while
             # conditioning on the other target tokens filled in context.
+            mask_token_id = tokenizer.mask_token_id
+            if mask_token_id is None:
+                continue
+            input_ids = inputs["input_ids"]
             shared_inputs = {k: v for k, v in inputs.items() if k != "input_ids"}
+            working_input_ids = input_ids.clone()
+            for pos, target_id in zip(mask_positions, target_ids):
+                working_input_ids[0, pos] = target_id
 
-            for opt_text, opt_ids in group:
-                if len(opt_ids) != length:
-                    continue
+            # Build one batched forward per option instead of one per token.
+            variant_input_ids = working_input_ids.repeat(length, 1)
+            for row_idx, pos in enumerate(mask_positions):
+                variant_input_ids[row_idx, pos] = mask_token_id
 
-                working_input_ids = input_ids.clone()
-                target_ids = [int(tok_id) for tok_id in opt_ids]
+            expanded_inputs = {}
+            for key, value in shared_inputs.items():
+                repeats = (length,) + (1,) * (value.dim() - 1)
+                expanded_inputs[key] = value.repeat(*repeats)
 
-                for pos, target_id in zip(mask_positions_list, target_ids):
-                    working_input_ids[0, pos] = target_id
-
-                # Build one batched forward per option instead of one per token.
-                variant_input_ids = working_input_ids.repeat(length, 1)
-                for row_idx, pos in enumerate(mask_positions_list):
-                    variant_input_ids[row_idx, pos] = mask_token_id
-
-                expanded_inputs = {}
-                for key, value in shared_inputs.items():
-                    repeats = (length,) + (1,) * (value.dim() - 1)
-                    expanded_inputs[key] = value.repeat(*repeats)
-
-                outputs = model(input_ids=variant_input_ids, **expanded_inputs)
-                logits = outputs.logits
-                row_idx = torch.arange(length, device=logits.device)
-                pos_idx = torch.tensor(mask_positions_list, device=logits.device)
-                mask_logits = logits[row_idx, pos_idx, :]
-                log_probs = torch.log_softmax(mask_logits, dim=-1)
-                target_tensor = torch.tensor(target_ids, device=logits.device)
-                token_log_probs = log_probs[row_idx, target_tensor]
-                total_log_prob = float(token_log_probs.sum().item())
-                scores[opt_text] = total_log_prob / length
+            logits = model(input_ids=variant_input_ids, **expanded_inputs).logits
+            row_idx = torch.arange(length, device=logits.device, dtype=torch.long)
+            pos_idx = torch.tensor(mask_positions, device=logits.device, dtype=torch.long)
+            mask_logits = logits[row_idx, pos_idx, :]
+            log_probs = torch.log_softmax(mask_logits, dim=-1)
+            target_tensor = torch.tensor(target_ids, device=logits.device, dtype=torch.long)
+            token_log_probs = log_probs[row_idx, target_tensor]
+            total_log_prob = float(token_log_probs.sum().item())
+            scores[opt_text] = total_log_prob / length
 
     return scores
 
@@ -683,7 +784,14 @@ def evaluate_model(
     logger.info(f"Loading model: {model_name}")
     try:
         tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForMaskedLM.from_pretrained(model_name).to(device)
+        if tokenizer.mask_token is None or tokenizer.mask_token_id is None:
+            logger.error(f"Tokenizer for {model_name} has no mask token.")
+            return None
+        model_kwargs: Dict[str, Any] = {}
+        if is_modernbert_model(model_name):
+            logger.info("Detected ModernBERT architecture; forcing eager attention.")
+            model_kwargs["attn_implementation"] = "eager"
+        model = AutoModelForMaskedLM.from_pretrained(model_name, **model_kwargs).to(device)
         vocab_expanded = ensure_padding_token(tokenizer)
         if vocab_expanded:
             model.resize_token_embeddings(len(tokenizer))
