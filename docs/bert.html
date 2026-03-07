@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="tr"><head>
+<html lang="tr">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HukukBERT - Türk Hukuku İçin Alan Spesifik Yapay Zeka Modeli</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;family=JetBrains+Mono:wght@400;500&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #faf9f6;
@@ -628,7 +632,7 @@
     <main class="container">
 
         <header>
-           
+
             <h1>HukukBERT - Türk Hukuku için Alan Spesifik Yapay Zeka Modeli</h1>
             <p class="subtitle">21 GB temizlenmiş hukuki corpus üzerinde, gelişmiş maskeleme stratejileriyle eğitilmiş
                 —&nbsp;Türkiye'nin en kapsamlı hukuki dil modeli.</p>
@@ -653,10 +657,11 @@
         </p>
 
         <p>HukukBERT, bu sınırlamaları aşmak amacıyla içtihat, mevzuat ve literatür verilerini içeren
-            <strong>21&nbsp;GB</strong> boyutunda temizlenmiş bir Türk hukuk corpusu üzerinde eğitilmiştir. Bu ölçek, 
+            <strong>21&nbsp;GB</strong> boyutunda temizlenmiş bir Türk hukuk corpusu üzerinde eğitilmiştir. Bu ölçek,
             terminolojik kapsama ve çeşitlilik açısından önceki çalışmalara kıyasla
             belirgin
-            bir sıçramaya karşılık gelmektedir.</p>
+            bir sıçramaya karşılık gelmektedir.
+        </p>
         <section class="highlight-box">
             <section class="stat-row">
                 <div class="stat"><span class="number">21 GB</span><span class="label">Temizlenmiş Corpus</span></div>
@@ -677,15 +682,22 @@
                 <article class="rh-card primary">
                     <h4 class="mn">turkhukuk.ai / HukukBERT</h4>
                     <div class="scores">
-                        <div><span class="sv">83.87%</span><span class="sm">Top-1 Accuracy</span></div>
+                        <div><span class="sv">84.40%</span><span class="sm">Top-1 Accuracy</span></div>
                         <div><span class="sv">98.80%</span><span class="sm">Top-3 Accuracy</span></div>
                     </div>
-                    <p class="ci">95% CI — Top-1: [81.06%, 86.33%] · Top-3: [97.74%, 99.37%]</p>
+                    <p class="ci">95% CI — Top-1: [81.63%, 86.82%] · Top-3: [97.74%, 99.37%]</p>
+                </article>
+                <article class="rh-card">
+                    <h4 class="mn">Mürsit-Large</h4>
+                    <div class="scores">
+                        <div><span class="sv">78.80%</span><span class="sm">Top-1</span></div>
+                        <div><span class="sv">97.73%</span><span class="sm">Top-3</span></div>
+                    </div>
                 </article>
                 <article class="rh-card">
                     <h4 class="mn">BERTurk-Legal</h4>
                     <div class="scores">
-                        <div><span class="sv">75.07%</span><span class="sm">Top-1</span></div>
+                        <div><span class="sv">75.47%</span><span class="sm">Top-1</span></div>
                         <div><span class="sv">96.00%</span><span class="sm">Top-3</span></div>
                     </div>
                 </article>
@@ -693,42 +705,35 @@
                     <h4 class="mn">BERTurk-128k</h4>
                     <div class="scores">
                         <div><span class="sv">71.87%</span><span class="sm">Top-1</span></div>
+                        <div><span class="sv">95.20%</span><span class="sm">Top-3</span></div>
+                    </div>
+                </article>
+                <article class="rh-card">
+                    <h4 class="mn">TabiBERT</h4>
+                    <div class="scores">
+                        <div><span class="sv">68.13%</span><span class="sm">Top-1</span></div>
                         <div><span class="sv">95.33%</span><span class="sm">Top-3</span></div>
                     </div>
                 </article>
                 <article class="rh-card">
                     <h4 class="mn">BERTurk-cased</h4>
                     <div class="scores">
-                        <div><span class="sv">64.53%</span><span class="sm">Top-1</span></div>
-                        <div><span class="sv">93.60%</span><span class="sm">Top-3</span></div>
-                    </div>
-                </article>
-                <article class="rh-card">
-                    <h4 class="mn">Mürsit-Large</h4>
-                    <div class="scores">
-                        <div><span class="sv">62.53%</span><span class="sm">Top-1</span></div>
-                        <div><span class="sv">94.40%</span><span class="sm">Top-3</span></div>
+                        <div><span class="sv">63.73%</span><span class="sm">Top-1</span></div>
+                        <div><span class="sv">93.47%</span><span class="sm">Top-3</span></div>
                     </div>
                 </article>
                 <article class="rh-card">
                     <h4 class="mn">turkish-large-bert</h4>
                     <div class="scores">
-                        <div><span class="sv">61.20%</span><span class="sm">Top-1</span></div>
-                        <div><span class="sv">91.07%</span><span class="sm">Top-3</span></div>
-                    </div>
-                </article>
-                <article class="rh-card">
-                    <h4 class="mn">TabiBERT</h4>
-                    <div class="scores">
-                        <div><span class="sv">48.40%</span><span class="sm">Top-1</span></div>
-                        <div><span class="sv">88.40%</span><span class="sm">Top-3</span></div>
+                        <div><span class="sv">61.60%</span><span class="sm">Top-1</span></div>
+                        <div><span class="sv">91.20%</span><span class="sm">Top-3</span></div>
                     </div>
                 </article>
             </section>
         </section>
 
-        <p>HukukBERT, sıralamada kendisine en yakın model olan BERTurk-Legal'e kıyasla Top-1 doğruluğunda <strong>+8.80
-                puan</strong>, standart BERTurk modeline kıyasla ise <strong>+19.34 puan</strong> mutlak iyileşme
+        <p>HukukBERT, sıralamada kendisine en yakın model olan Mürsit-Large'a kıyasla Top-1 doğruluğunda <strong>+5.60
+                puan</strong>, standart BERTurk modeline kıyasla ise <strong>+20.67 puan</strong> mutlak iyileşme
             sağlamıştır.
         </p>
 
@@ -744,7 +749,8 @@
                 uygulanmasına
                 hükmedilir.
             </blockquote>
-            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">taksirli
+            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">taksirli
                     suçlu (0.30) · asi=0.23 · itiyadi=0.22</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">taksirli
                     suçlu
@@ -761,7 +767,8 @@
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">taksirli
                     suçlu
                     (0.69)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">itiyadi suçlu (0.96)</span> · Vocab: örgüt=0.672, mükerrir=0.052</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">itiyadi suçlu (0.96)</span> · Vocab: örgüt=0.672, mükerrir=0.052</span></p>
         </section>
 
         <section class="ex feat">
@@ -784,12 +791,15 @@
                     (0.98)</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">miras
                     (0.92)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">tereke (0.96)</span> · Vocab: tereke=0.924, miras=0.037</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">tereke (0.96)</span> · Vocab: tereke=0.924, miras=0.037</span></p>
         </section>
 
         <section class="ex feat">
-            <blockquote class="q">İcra mahkemesinin para cezasına ilişkin olmayan nihai kararlarına karşı kural olarak <span class="mt">[MASK]</span> kanun yoluna başvurulabilir.</blockquote>
-            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">itiraz
+            <blockquote class="q">İcra mahkemesinin para cezasına ilişkin olmayan nihai kararlarına karşı kural olarak
+                <span class="mt">[MASK]</span> kanun yoluna başvurulabilir.</blockquote>
+            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">itiraz
                     (0.85) · istinaf=0.10</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">karar
                     düzeltme
@@ -806,11 +816,13 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">istinaf
                     (0.67) ·
                     itiraz=0.18</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">istinaf (0.82)</span> · Vocab: temyiz=0.622, istinaf=0.313</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">istinaf (0.82)</span> · Vocab: temyiz=0.622, istinaf=0.313</span></p>
         </section>
 
         <section class="ex feat">
-            <blockquote class="q">Sözleşmenin taraflarından birinin, sözleşmede öngörülen edimini ifa etmemesi durumunda, diğer
+            <blockquote class="q">Sözleşmenin taraflarından birinin, sözleşmede öngörülen edimini ifa etmemesi
+                durumunda, diğer
                 tarafın sahip olduğu hakları kullanabilmesi için borçluya uygun bir <span class="mt">[MASK]</span>
                 vermesi veya
                 verdirmesi kural olarak zorunludur.</blockquote>
@@ -826,7 +838,8 @@
                     (0.58)</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">ceza
                     (0.52)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">mehil (1.00)</span> · Vocab: mehil=0.807, süre=0.114, önel=0.049</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">mehil (1.00)</span> · Vocab: mehil=0.807, süre=0.114, önel=0.049</span></p>
         </section>
 
         <!-- ══════════════════════════════════════════════ 3 ══ -->
@@ -835,8 +848,10 @@
         <p>Corpus oluşturulurken aşağıdaki birincil kaynaklardan yararlanılmıştır:</p>
         <ul class="il">
             <li>İçtihat ve mevzuat verileri — <a href="https://mevzuat.adalet.gov.tr">mevzuat.adalet.gov.tr</a></li>
-            <li>Anayasa Mahkemesi kararları — <a href="https://kararlarbilgibankasi.anayasa.gov.tr/">kararlarbilgibankasi.anayasa.gov.tr</a></li>
-            <li>Türkiye Barolar Birliği Dergisi — <a href="https://tbbdergisi.barobirlik.org.tr">tbbdergisi.barobirlik.org.tr</a></li>
+            <li>Anayasa Mahkemesi kararları — <a
+                    href="https://kararlarbilgibankasi.anayasa.gov.tr/">kararlarbilgibankasi.anayasa.gov.tr</a></li>
+            <li>Türkiye Barolar Birliği Dergisi — <a
+                    href="https://tbbdergisi.barobirlik.org.tr">tbbdergisi.barobirlik.org.tr</a></li>
             <li>Çeşitli akademik kaynaklar (tezler, makaleler)</li>
         </ul>
 
@@ -1048,7 +1063,8 @@
             </table>
         </section>
 
-        <aside class="note"><strong>Önemli Bulgu:</strong> Yaklaşık <strong>2 milyon Yargıtay kararı</strong> birebir aynı
+        <aside class="note"><strong>Önemli Bulgu:</strong> Yaklaşık <strong>2 milyon Yargıtay kararı</strong> birebir
+            aynı
             veya yüksek oranda benzer olarak tespit edilmiştir.</aside>
 
         <h3>Veri Dengeleme (Upscale / Downscale)</h3>
@@ -1064,7 +1080,8 @@
         <h3>Neden Yeni Tokenizer?</h3>
 
         <p><a href="https://sozluk.adalet.gov.tr/">Adalet Bakanlığı Hukuk Sözlüğü</a>'nden elde edilen hukuki
-            terimler de dahil edilerek yeni bir tokenizer eğitilmiştir. <a href="https://huggingface.co/docs/transformers/en/tokenizer_summary">WordPiece ve Unigram</a>
+            terimler de dahil edilerek yeni bir tokenizer eğitilmiştir. <a
+                href="https://huggingface.co/docs/transformers/en/tokenizer_summary">WordPiece ve Unigram</a>
             yaklaşımları
             karşılaştırılmış, <a href="https://github.com/ahmetaa/zemberek-nlp">Zemberek</a> morfolojik ön-işleme
             denemeleri
@@ -1182,7 +1199,7 @@
         <p>
             <em>Domain-Adaptive Pre-Training</em> (DAPT) yöntem ile ilerlenmiş, tokenizer'ın değişmiş olması
             model
-            ağırlıklarının yeniden ayarlanmasını gerektirmiştir. 
+            ağırlıklarının yeniden ayarlanmasını gerektirmiştir.
         </p>
 
         <section class="table-wrapper">
@@ -1325,128 +1342,130 @@
                 <span class="pv">2</span>
             </p>
         </section>
-                <h3>Checkpoint Bazında Performans İlerlemesi</h3>
-                <p>Eğitim sürecinde alınan checkpoint'ler aşağıda sunulmuştur:</p>
-                <section class="table-wrapper">
-                    <table>
-                        <caption>Tablo 6 — Checkpoint Bazında Performans (N=750)</caption>
-                        <thead>
-                            <tr>
-                                <th>Checkpoint</th>
-                                <th class="num">Top-1</th>
-                                <th class="num">Top-1 95% CI</th>
-                                <th class="num">Top-3</th>
-                                <th class="num">Top-3 95% CI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="row-hl">
-                                <td><strong>checkpoint-22000</strong></td>
-                                <td class="num"><strong>84,13%</strong></td>
-                                <td class="num">[81,35% – 86,57%]</td>
-                                <td class="num">98,80%</td>
-                                <td class="num">[97,74% – 99,37%]</td>
-                            </tr>
-                            <tr class="row-hl">
-                                <td><strong>checkpoint-21500</strong></td>
-                                <td class="num"><strong>84,13%</strong></td>
-                                <td class="num">[81,35% – 86,57%]</td>
-                                <td class="num">98,80%</td>
-                                <td class="num">[97,74% – 99,37%]</td>
-                            </tr>
-                            <tr class="row-hl">
-                                <td><strong>checkpoint-20500</strong></td>
-                                <td class="num"><strong>84,13%</strong></td>
-                                <td class="num">[81,35% – 86,57%]</td>
-                                <td class="num">98,67%</td>
-                                <td class="num">[97,56% – 99,27%]</td>
-                            </tr>
-                            <tr class="row-hl">
-                                <td><strong>checkpoint-20000</strong></td>
-                                <td class="num"><strong>84,13%</strong></td>
-                                <td class="num">[81,35% – 86,57%]</td>
-                                <td class="num">98,67%</td>
-                                <td class="num">[97,56% – 99,27%]</td>
-                            </tr>
-                            <tr>
-                                <td>checkpoint-29000</td>
-                                <td class="num">83,87%</td>
-                                <td class="num">[81,06% – 86,33%]</td>
-                                <td class="num">98,67%</td>
-                                <td class="num">[97,56% – 99,27%]</td>
-                            </tr>
-                            <tr>
-                                <td>checkpoint-28000 (yayınlanan)</td>
-                                <td class="num">83,87%</td>
-                                <td class="num">[81,06% – 86,33%]</td>
-                                <td class="num">98,80%</td>
-                                <td class="num">[97,74% – 99,37%]</td>
-                            </tr>
-                            <tr>
-                                <td>checkpoint-26000</td>
-                                <td class="num">83,87%</td>
-                                <td class="num">[81,06% – 86,33%]</td>
-                                <td class="num">98,80%</td>
-                                <td class="num">[97,74% – 99,37%]</td>
-                            </tr>
-                            <tr>
-                                <td>Final model</td>
-                                <td class="num">83,60%</td>
-                                <td class="num">[80,78% – 86,08%]</td>
-                                <td class="num">98,93%</td>
-                                <td class="num">[97,91% – 99,46%]</td>
-                            </tr>
-                            <tr>
-                                <td>checkpoint-10500</td>
-                                <td class="num">82,53%</td>
-                                <td class="num">[79,65% – 85,08%]</td>
-                                <td class="num">98,40%</td>
-                                <td class="num">[97,22% – 99,08%]</td>
-                            </tr>
-                            <tr>
-                                <td>checkpoint-8000</td>
-                                <td class="num">80,67%</td>
-                                <td class="num">[77,69% – 83,33%]</td>
-                                <td class="num">98,00%</td>
-                                <td class="num">[96,73% – 98,78%]</td>
-                            </tr>
-                            <tr>
-                                <td>checkpoint-4000</td>
-                                <td class="num">79,07%</td>
-                                <td class="num">[76,01% – 81,83%]</td>
-                                <td class="num">97,73%</td>
-                                <td class="num">[96,40% – 98,58%]</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-                <p><em>Not: Tam checkpoint listesi için <a href="https://github.com/TurkHukuk/hukukbert">GitHub deposuna</a>
-                        başvurabilirsiniz.</em></p>
-                <h3>Eğitim ve Değerlendirme Grafikleri</h3>
-                <section class="chart-grid train">
-                    <figure class="chart-card">
-                        <img src="img/train_loss.svg" alt="HukukBERT eğitim train loss grafiği" loading="lazy">
-                        <figcaption>Train Loss</figcaption>
-                    </figure>
-                    <figure class="chart-card">
-                        <img src="img/eval_loss.svg" alt="HukukBERT değerlendirme loss grafiği" loading="lazy">
-                        <figcaption>Eval Loss</figcaption>
-                    </figure>
-                    <figure class="chart-card">
-                        <img src="img/train_grad_norm.svg" alt="HukukBERT eğitim gradient norm grafiği" loading="lazy">
-                        <figcaption>Train Grad Norm</figcaption>
-                    </figure>
-                    <figure class="chart-card">
-                        <img src="img/train_learning_rate.svg" alt="HukukBERT eğitim learning rate grafiği" loading="lazy">
-                        <figcaption>Train Learning Rate</figcaption>
-                    </figure>
-                </section>
+        <h3>Checkpoint Bazında Performans İlerlemesi</h3>
+        <p>Eğitim sürecinde alınan checkpoint'ler aşağıda sunulmuştur:</p>
+        <section class="table-wrapper">
+            <table>
+                <caption>Tablo 6 — Checkpoint Bazında Performans (N=750)</caption>
+                <thead>
+                    <tr>
+                        <th>Checkpoint</th>
+                        <th class="num">Top-1</th>
+                        <th class="num">Top-1 95% CI</th>
+                        <th class="num">Top-3</th>
+                        <th class="num">Top-3 95% CI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-hl">
+                        <td><strong>checkpoint-22000</strong></td>
+                        <td class="num"><strong>84,13%</strong></td>
+                        <td class="num">[81,35% – 86,57%]</td>
+                        <td class="num">98,80%</td>
+                        <td class="num">[97,74% – 99,37%]</td>
+                    </tr>
+                    <tr class="row-hl">
+                        <td><strong>checkpoint-21500</strong></td>
+                        <td class="num"><strong>84,13%</strong></td>
+                        <td class="num">[81,35% – 86,57%]</td>
+                        <td class="num">98,80%</td>
+                        <td class="num">[97,74% – 99,37%]</td>
+                    </tr>
+                    <tr class="row-hl">
+                        <td><strong>checkpoint-20500</strong></td>
+                        <td class="num"><strong>84,13%</strong></td>
+                        <td class="num">[81,35% – 86,57%]</td>
+                        <td class="num">98,67%</td>
+                        <td class="num">[97,56% – 99,27%]</td>
+                    </tr>
+                    <tr class="row-hl">
+                        <td><strong>checkpoint-20000</strong></td>
+                        <td class="num"><strong>84,13%</strong></td>
+                        <td class="num">[81,35% – 86,57%]</td>
+                        <td class="num">98,67%</td>
+                        <td class="num">[97,56% – 99,27%]</td>
+                    </tr>
+                    <tr>
+                        <td>checkpoint-29000</td>
+                        <td class="num">83,87%</td>
+                        <td class="num">[81,06% – 86,33%]</td>
+                        <td class="num">98,67%</td>
+                        <td class="num">[97,56% – 99,27%]</td>
+                    </tr>
+                    <tr>
+                        <td>checkpoint-28000 (yayınlanan)</td>
+                        <td class="num">83,87%</td>
+                        <td class="num">[81,06% – 86,33%]</td>
+                        <td class="num">98,80%</td>
+                        <td class="num">[97,74% – 99,37%]</td>
+                    </tr>
+                    <tr>
+                        <td>checkpoint-26000</td>
+                        <td class="num">83,87%</td>
+                        <td class="num">[81,06% – 86,33%]</td>
+                        <td class="num">98,80%</td>
+                        <td class="num">[97,74% – 99,37%]</td>
+                    </tr>
+                    <tr>
+                        <td>Final model</td>
+                        <td class="num">83,60%</td>
+                        <td class="num">[80,78% – 86,08%]</td>
+                        <td class="num">98,93%</td>
+                        <td class="num">[97,91% – 99,46%]</td>
+                    </tr>
+                    <tr>
+                        <td>checkpoint-10500</td>
+                        <td class="num">82,53%</td>
+                        <td class="num">[79,65% – 85,08%]</td>
+                        <td class="num">98,40%</td>
+                        <td class="num">[97,22% – 99,08%]</td>
+                    </tr>
+                    <tr>
+                        <td>checkpoint-8000</td>
+                        <td class="num">80,67%</td>
+                        <td class="num">[77,69% – 83,33%]</td>
+                        <td class="num">98,00%</td>
+                        <td class="num">[96,73% – 98,78%]</td>
+                    </tr>
+                    <tr>
+                        <td>checkpoint-4000</td>
+                        <td class="num">79,07%</td>
+                        <td class="num">[76,01% – 81,83%]</td>
+                        <td class="num">97,73%</td>
+                        <td class="num">[96,40% – 98,58%]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <p><em>Not: Tam checkpoint listesi için <a href="https://github.com/TurkHukuk/hukukbert">GitHub deposuna</a>
+                başvurabilirsiniz.</em></p>
+        <h3>Eğitim ve Değerlendirme Grafikleri</h3>
+        <section class="chart-grid train">
+            <figure class="chart-card">
+                <img src="img/train_loss.svg" alt="HukukBERT eğitim train loss grafiği" loading="lazy">
+                <figcaption>Train Loss</figcaption>
+            </figure>
+            <figure class="chart-card">
+                <img src="img/eval_loss.svg" alt="HukukBERT değerlendirme loss grafiği" loading="lazy">
+                <figcaption>Eval Loss</figcaption>
+            </figure>
+            <figure class="chart-card">
+                <img src="img/train_grad_norm.svg" alt="HukukBERT eğitim gradient norm grafiği" loading="lazy">
+                <figcaption>Train Grad Norm</figcaption>
+            </figure>
+            <figure class="chart-card">
+                <img src="img/train_learning_rate.svg" alt="HukukBERT eğitim learning rate grafiği" loading="lazy">
+                <figcaption>Train Learning Rate</figcaption>
+            </figure>
+        </section>
 
         <!-- ══════════════════════════════════════════════ 6 ══ -->
         <h2>Değerlendirme Yöntemi: Hukuki Cloze Testi</h2>
         <p>Model performansını ölçmek için, hukuki kavram tahmine dayalı özel bir <em>cloze test</em> benchmark'ı
-            oluşturulmuştur. 
-        </p><p>Benchmark veri seti açık kaynak olarak erişilebilir: <a href="https://huggingface.co/datasets/turkhukuk/hukukbert-cloze-benchmark">hukukbert-cloze-benchmark</a>
+            oluşturulmuştur.
+        </p>
+        <p>Benchmark veri seti açık kaynak olarak erişilebilir: <a
+                href="https://huggingface.co/datasets/turkhukuk/hukukbert-cloze-benchmark">hukukbert-cloze-benchmark</a>
         </p>
         <section class="code-block">
             <h3 class="ch">Örnek — hukukbert_v1_cloze.json</h3>
@@ -1495,52 +1514,58 @@
                 <tbody>
                     <tr class="row-hl">
                         <td><strong>turkhukuk.ai/hukukbert</strong></td>
-                        <td class="num"><strong>83,87%</strong></td>
-                        <td class="num">[81,06% – 86,33%]</td>
+                        <td class="num"><strong>84,40%</strong></td>
+                        <td class="num">[81,63% – 86,82%]</td>
                         <td class="num"><strong>98,80%</strong></td>
                         <td class="num">[97,74% – 99,37%]</td>
                     </tr>
                     <tr>
-                        <td><a href="https://huggingface.co/KocLab-Bilkent/BERTurk-Legal" target="_blank" rel="noopener noreferrer">KocLab-Bilkent/BERTurk-Legal</a></td>
-                        <td class="num">75,07%</td>
-                        <td class="num">[71,85% – 78,03%]</td>
+                        <td><a href="https://huggingface.co/newmindai/Mursit-Large" target="_blank"
+                                rel="noopener noreferrer">newmindai/Mursit-Large</a></td>
+                        <td class="num">78,80%</td>
+                        <td class="num">[75,73% – 81,57%]</td>
+                        <td class="num">97,73%</td>
+                        <td class="num">[96,40% – 98,58%]</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://huggingface.co/KocLab-Bilkent/BERTurk-Legal" target="_blank"
+                                rel="noopener noreferrer">KocLab-Bilkent/BERTurk-Legal</a></td>
+                        <td class="num">75,47%</td>
+                        <td class="num">[72,26% – 78,41%]</td>
                         <td class="num">96,00%</td>
                         <td class="num">[94,35% – 97,18%]</td>
                     </tr>
                     <tr>
-                        <td><a href="https://huggingface.co/dbmdz/bert-base-turkish-128k-cased" target="_blank" rel="noopener noreferrer">dbmdz/bert-base-turkish-128k-cased</a></td>
+                        <td><a href="https://huggingface.co/dbmdz/bert-base-turkish-128k-cased" target="_blank"
+                                rel="noopener noreferrer">dbmdz/bert-base-turkish-128k-cased</a></td>
                         <td class="num">71,87%</td>
                         <td class="num">[68,54% – 74,97%]</td>
+                        <td class="num">95,20%</td>
+                        <td class="num">[93,43% – 96,51%]</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://huggingface.co/boun-tabilab/TabiBERT" target="_blank"
+                                rel="noopener noreferrer">boun-tabilab/TabiBERT</a></td>
+                        <td class="num">68,13%</td>
+                        <td class="num">[64,71% – 71,37%]</td>
                         <td class="num">95,33%</td>
                         <td class="num">[93,58% – 96,63%]</td>
                     </tr>
                     <tr>
-                        <td><a href="https://huggingface.co/dbmdz/bert-base-turkish-cased" target="_blank" rel="noopener noreferrer">dbmdz/bert-base-turkish-cased</a></td>
-                        <td class="num">64,53%</td>
-                        <td class="num">[61,04% – 67,88%]</td>
-                        <td class="num">93,60%</td>
-                        <td class="num">[91,62% – 95,14%]</td>
+                        <td><a href="https://huggingface.co/dbmdz/bert-base-turkish-cased" target="_blank"
+                                rel="noopener noreferrer">dbmdz/bert-base-turkish-cased</a></td>
+                        <td class="num">63,73%</td>
+                        <td class="num">[60,23% – 67,10%]</td>
+                        <td class="num">93,47%</td>
+                        <td class="num">[91,47% – 95,02%]</td>
                     </tr>
                     <tr>
-                        <td><a href="https://huggingface.co/newmindai/Mursit-Large" target="_blank" rel="noopener noreferrer">newmindai/Mursit-Large</a></td>
-                        <td class="num">62,53%</td>
-                        <td class="num">[59,01% – 65,93%]</td>
-                        <td class="num">94,40%</td>
-                        <td class="num">[92,52% – 95,83%]</td>
-                    </tr>
-                    <tr>
-                        <td><a href="https://huggingface.co/ytu-ce-cosmos/turkish-large-bert-cased" target="_blank" rel="noopener noreferrer">ytu-ce-cosmos/turkish-large-bert-cased</a></td>
-                        <td class="num">61,20%</td>
-                        <td class="num">[57,66% – 64,62%]</td>
-                        <td class="num">91,07%</td>
-                        <td class="num">[88,81% – 92,90%]</td>
-                    </tr>
-                    <tr>
-                        <td><a href="https://huggingface.co/boun-tabilab/TabiBERT" target="_blank" rel="noopener noreferrer">boun-tabilab/TabiBERT</a></td>
-                        <td class="num">48,40%</td>
-                        <td class="num">[44,84% – 51,98%]</td>
-                        <td class="num">88,40%</td>
-                        <td class="num">[85,91% – 90,50%]</td>
+                        <td><a href="https://huggingface.co/ytu-ce-cosmos/turkish-large-bert-cased" target="_blank"
+                                rel="noopener noreferrer">ytu-ce-cosmos/turkish-large-bert-cased</a></td>
+                        <td class="num">61,60%</td>
+                        <td class="num">[58,07% – 65,01%]</td>
+                        <td class="num">91,20%</td>
+                        <td class="num">[88,96% – 93,02%]</td>
                     </tr>
                 </tbody>
             </table>
@@ -1559,7 +1584,8 @@
                 uygulanmasına
                 hükmedilir.
             </blockquote>
-            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">taksirli
+            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">taksirli
                     suçlu (0.30) · asi=0.23 · tesadüfi=0.25 · itiyadi=0.22</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">taksirli
                     suçlu
@@ -1576,12 +1602,14 @@
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">taksirli
                     suçlu
                     (0.69)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">itiyadi suçlu (0.96)</span> · Vocab: örgüt=0.672, mükerrir=0.052</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">itiyadi suçlu (0.96)</span> · Vocab: örgüt=0.672, mükerrir=0.052</span></p>
         </section>
 
         <!-- 8.2 -->
         <section class="ex">
-            <blockquote class="q">Davanın dinlenebilmesi için kanunlarda öngörülen ön şartın yerine getirilmemiş olması ve
+            <blockquote class="q">Davanın dinlenebilmesi için kanunlarda öngörülen ön şartın yerine getirilmemiş olması
+                ve
                 <span class="mt">[MASK]</span> nedeniyle davanın reddine karar verilmesinde, maktu ücrete hükmolunur.
             </blockquote>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">kesin
@@ -1598,7 +1626,8 @@
                     (0.38) · kesin delil=0.36</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">zamanaşımı
                     (0.89)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">husumet (0.93)</span> · Vocab: husumet=0.663, zamanaşımı=0.047</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">husumet (0.93)</span> · Vocab: husumet=0.663, zamanaşımı=0.047</span></p>
         </section>
 
         <!-- 8.3 -->
@@ -1625,18 +1654,21 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">iki (0.68)
                     ·
                     beş=0.20</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">iki (0.82)</span> · Vocab: iki=0.803, bir=0.130</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">iki (0.82)</span> · Vocab: iki=0.803, bir=0.130</span></p>
         </section>
 
         <!-- 8.4 -->
         <section class="ex">
-            <blockquote class="q">Bölge Adliye Mahkemesi kararı tebliğ edildikten sonra yasal <span class="mt">[MASK]</span>
+            <blockquote class="q">Bölge Adliye Mahkemesi kararı tebliğ edildikten sonra yasal <span
+                    class="mt">[MASK]</span>
                 olan iki
                 haftalık süre geçtikten sonra davalı vekili tarafından temyiz dilekçesi sunulmuştur. 6100 sayılı Hukuk
                 Muhakemeleri Kanunu hükümleri gereğince, süresinden sonra yapılan bu başvurunun usulden reddine karar
                 verilmesi
                 gerekmiştir.</blockquote>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml">turkish-large-bert</span><span class="pr">başvuru
+            <p class="mr"><span class="b bw">WIN</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">başvuru
                     süresi (0.98)</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">hak
                     düşürücü
@@ -1652,13 +1684,16 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">başvuru
                     süresi
                     (0.65) · zamanaşımı süresi=0.32</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">başvuru süresi (0.85)</span> · Vocab: temyiz=0.691, başvuru=0.138</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">başvuru süresi (0.85)</span> · Vocab: temyiz=0.691, başvuru=0.138</span></p>
         </section>
 
         <!-- 8.5 -->
         <section class="ex">
-            <blockquote class="q">Kişisel verilerin hukuka uygun işlenmesi için ilgili kişinin aydınlatılması, <span class="mt">[MASK]</span> yükümlülüğünün bir sonucudur.</blockquote>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml">turkish-large-bert</span><span class="pr">şeffaflık
+            <blockquote class="q">Kişisel verilerin hukuka uygun işlenmesi için ilgili kişinin aydınlatılması, <span
+                    class="mt">[MASK]</span> yükümlülüğünün bir sonucudur.</blockquote>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">şeffaflık
                     (0.93) · Vocab: aydınlatma=0.947</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">sözleşmesel
                     (0.53) · şeffaflık=0.45</span></p>
@@ -1671,12 +1706,14 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">şeffaflık
                     (0.46)
                     · cezai=0.35</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">şeffaflık (1.00)</span> · Vocab: aydınlatma=0.962</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">şeffaflık (1.00)</span> · Vocab: aydınlatma=0.962</span></p>
         </section>
 
         <!-- 8.6 -->
         <section class="ex">
-            <blockquote class="q">Takip borcun tamamen ödenmesiyle sona ermişse, icra mahkemesine yapılan şikayet hakkında
+            <blockquote class="q">Takip borcun tamamen ödenmesiyle sona ermişse, icra mahkemesine yapılan şikayet
+                hakkında
                 <span class="mt">[MASK]</span> karar verilir.
             </blockquote>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">reddi
@@ -1692,13 +1729,16 @@
                     (0.91)</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">görevsizlik
                     (0.92)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">karar verilmesine yer olmadığı (1.00)</span></span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">karar verilmesine yer olmadığı (1.00)</span></span></p>
         </section>
 
         <!-- 8.7 -->
         <section class="ex">
-            <blockquote class="q">Sözleşmenin kurulması için karşı tarafa yöneltilen irade açıklamasına <span class="mt">[MASK]</span> denir.</blockquote>
-            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">aldatma
+            <blockquote class="q">Sözleşmenin kurulması için karşı tarafa yöneltilen irade açıklamasına <span
+                    class="mt">[MASK]</span> denir.</blockquote>
+            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">aldatma
                     (0.73) · icab=0.16</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">aldatma
                     (0.79)
@@ -1713,12 +1753,14 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">icab
                     (0.60) ·
                     aldatma=0.36</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">icab (0.99)</span> · Vocab: icap=0.657, irade=0.176</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">icab (0.99)</span> · Vocab: icap=0.657, irade=0.176</span></p>
         </section>
 
         <!-- 8.8 -->
         <section class="ex">
-            <blockquote class="q">Sözleşmenin taraflarından birinin, sözleşmede öngörülen edimini ifa etmemesi durumunda, diğer
+            <blockquote class="q">Sözleşmenin taraflarından birinin, sözleşmede öngörülen edimini ifa etmemesi
+                durumunda, diğer
                 tarafın sahip olduğu hakları kullanabilmesi için borçluya uygun bir <span class="mt">[MASK]</span>
                 vermesi veya
                 verdirmesi kural olarak zorunludur.</blockquote>
@@ -1735,7 +1777,8 @@
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">ceza
                     (0.52) ·
                     mehil=0.16</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">mehil (1.00)</span> · Vocab: mehil=0.807, süre=0.114, önel=0.049</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">mehil (1.00)</span> · Vocab: mehil=0.807, süre=0.114, önel=0.049</span></p>
         </section>
 
         <!-- 8.9 -->
@@ -1759,14 +1802,17 @@
                     (0.98)</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">BERTurk-128k</span><span class="pr">miras
                     (0.92)</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">tereke (0.96)</span> · Vocab: tereke=0.924, miras=0.037</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">tereke (0.96)</span> · Vocab: tereke=0.924, miras=0.037</span></p>
         </section>
 
         <!-- 8.10 -->
         <section class="ex">
-            <blockquote class="q">Aynı amaçla düzenlenen sözleşmelerin metinlerinin özdeş olmaması, bu sözleşmelerde yer alan
+            <blockquote class="q">Aynı amaçla düzenlenen sözleşmelerin metinlerinin özdeş olmaması, bu sözleşmelerde yer
+                alan
                 hükümlerin <span class="mt">[MASK]</span> sayılmasına engel teşkil etmez.</blockquote>
-            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">sözleşme
+            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">sözleşme
                     öncesi bildirimler (0.43) · genel işlem koşulu=0.31</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">teamül
                     hükümleri (0.53) · genel işlem koşulu=0.30</span></p>
@@ -1781,13 +1827,16 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">genel
                     işlem
                     koşulu (0.41) · tamamlayıcı yorum=0.27</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">genel işlem koşulu (0.98)</span> · Vocab: kesin=0.485, aynı=0.072</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">genel işlem koşulu (0.98)</span> · Vocab: kesin=0.485, aynı=0.072</span></p>
         </section>
 
         <!-- 8.11 -->
         <section class="ex">
-            <blockquote class="q">İcra mahkemesinin para cezasına ilişkin olmayan nihai kararlarına karşı kural olarak <span class="mt">[MASK]</span> kanun yoluna başvurulabilir.</blockquote>
-            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span class="pr">itiraz
+            <blockquote class="q">İcra mahkemesinin para cezasına ilişkin olmayan nihai kararlarına karşı kural olarak
+                <span class="mt">[MASK]</span> kanun yoluna başvurulabilir.</blockquote>
+            <p class="mr"><span class="b bf">FAIL</span><span class="ml">turkish-large-bert</span><span
+                    class="pr">itiraz
                     (0.85) · istinaf=0.10</span></p>
             <p class="mr"><span class="b bf">FAIL</span><span class="ml">Mürsit-Large</span><span class="pr">karar
                     düzeltme
@@ -1804,13 +1853,15 @@
             <p class="mr"><span class="b bw">WIN</span><span class="ml">BERTurk-128k</span><span class="pr">istinaf
                     (0.67) ·
                     itiraz=0.18</span></p>
-            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span class="tp">istinaf (0.82)</span> · Vocab: temyiz=0.622, istinaf=0.313</span></p>
+            <p class="mr"><span class="b bw">WIN</span><span class="ml ours">HukukBERT</span><span class="pr"><span
+                        class="tp">istinaf (0.82)</span> · Vocab: temyiz=0.622, istinaf=0.313</span></p>
         </section>
 
         <!-- ══════════════════════════════════════════════ 9 ══ -->
         <section class="conclusion">
             <h2 style="margin-top:0;border:none;padding:0"></h2>
-            <p><a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai</a> ekibi olarak, Türkiye'de bu ölçekte ilk kez gerçekleştirilen bu çalışmayla 21&nbsp;GB
+            <p><a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai</a> ekibi olarak, Türkiye'de bu ölçekte
+                ilk kez gerçekleştirilen bu çalışmayla 21&nbsp;GB
                 temizlenmiş
                 hukuki corpus kullanılarak <a href="https://github.com/TurkHukuk/hukukbert">HukukBERT</a> modeli
                 eğitilmiştir.
@@ -1819,16 +1870,19 @@
                 tahmininde kayda değer bir üstünlük sergilemiştir.</p>
             <p>HukukBERT, sonraki aşamalarda hukuki NER (Named Entity Recognition), metin segmentasyonu ve semantik
                 arama gibi
-                downstream görevlerde temel model olarak kullanılmaktadır. 
+                downstream görevlerde temel model olarak kullanılmaktadır.
                 oluşturmaktır.</p>
 
         </section>
 
         <footer>
-            <p>© 2026 <a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai</a> · <a href="https://github.com/TurkHukuk/hukukbert">GitHub</a></p>
+            <p>© 2026 <a target="_blank" href="https://www.turkhukuk.ai">TurkHukuk.ai</a> · <a
+                    href="https://github.com/TurkHukuk/hukukbert">GitHub</a></p>
         </footer>
 
     </main>
 
 
-</body></html>
+</body>
+
+</html>

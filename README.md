@@ -8,15 +8,15 @@ A domain-specific BERT model for Turkish legal text, pretrained from scratch on 
 
 | Model | Top-1 Accuracy | Top-1 95% CI | Top-3 Accuracy | Top-3 95% CI |
 |---|---:|---:|---:|---:|
-| turkhukuk.ai/hukukbert | 83,87% | [81,06% – 86,33%] | 98,80% | [97,74% – 99,37%] |
-| KocLab-Bilkent/BERTurk-Legal | 75,07% | [71,85% – 78,03%] | 96,00% | [94,35% – 97,18%] |
-| dbmdz/bert-base-turkish-128k-cased | 71,87% | [68,54% – 74,97%] | 95,33% | [93,58% – 96,63%] |
-| dbmdz/bert-base-turkish-cased | 64,53% | [61,04% – 67,88%] | 93,60% | [91,62% – 95,14%] |
-| newmindai/Mursit-Large | 62,53% | [59,01% – 65,93%] | 94,40% | [92,52% – 95,83%] |
-| ytu-ce-cosmos/turkish-large-bert-cased | 61,20% | [57,66% – 64,62%] | 91,07% | [88,81% – 92,90%] |
-| boun-tabilab/TabiBERT | 48,40% | [44,84% – 51,98%] | 88,40% | [85,91% – 90,50%] |
+| turkhukuk.ai/hukukbert | 84.40% | [81.63%, 86.82%] | 98.80% | [97.74%, 99.37%] |
+| newmindai/Mursit-Large | 78.80% | [75.73%, 81.57%] | 97.73% | [96.40%, 98.58%] |
+| KocLab-Bilkent/BERTurk-Legal | 75.47% | [72.26%, 78.41%] | 96.00% | [94.35%, 97.18%] |
+| dbmdz/bert-base-turkish-128k-cased | 71.87% | [68.54%, 74.97%] | 95.20% | [93.43%, 96.51%] |
+| boun-tabilab/TabiBERT | 68.13% | [64.71%, 71.37%] | 95.33% | [93.58%, 96.63%] |
+| dbmdz/bert-base-turkish-cased | 63.73% | [60.23%, 67.10%] | 93.47% | [91.47%, 95.02%] |
+| ytu-ce-cosmos/turkish-large-bert-cased | 61.60% | [58.07%, 65.01%] | 91.20% | [88.96%, 93.02%] |
 
-`turkhukuk.ai/hukukbert` outperforms the strongest baseline in this table (`KocLab-Bilkent/BERTurk-Legal`) by **+8,80 points** on Top-1 and **+2,80 points** on Top-3 accuracy on the legal cloze benchmark (n=750).
+`turkhukuk.ai/hukukbert` outperforms the strongest baseline in this table (`newmindai/Mursit-Large`) by **+5,60 points** on Top-1 and **+1,07 points** on Top-3 accuracy on the legal cloze benchmark (n=750).
 
 ## Model Details
 
