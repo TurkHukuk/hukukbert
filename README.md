@@ -1,6 +1,6 @@
 # HukukBERT
 
-A domain-specific BERT model for Turkish legal text, pretrained from scratch on 6 million unique court decisions with a custom 48K WordPiece tokenizer.
+A domain-specific BERT model for Turkish legal text, built by domain-adaptive pre-training (DAPT) on a balanced ~2.3M-document (19 GB) Turkish legal corpus with a custom 48K WordPiece tokenizer.
 
 **HukukBERT is developed by [TurkHukuk.ai](https://www.turkhukuk.ai)**
 
@@ -24,9 +24,10 @@ A domain-specific BERT model for Turkish legal text, pretrained from scratch on 
 |---|---|
 | **Architecture** | BERT-base (12 layers, 768 hidden, 12 heads) |
 | **Tokenizer** | Custom 48K WordPiece, trained on Turkish legal corpus |
-| **Pretraining corpus** | ~6M unique court decisions, mevzuat text, and various legal articles (Yargıtay, İstinaf, İlk Derece, Danıştay, AYM, Mevzuat, legal articles) |
-| **Deduplication** | MinHash + LSH on 11M original decisions → 6M unique |
+| **Pretraining corpus** | ~2.3M documents (19 GB), balanced across court decisions, mevzuat, and legal scholarship (Yargıtay, İstinaf, İlk Derece, Danıştay, AYM, Mevzuat, legal articles) |
+| **Deduplication & balancing** | MinHash LSH (num_perm=256, threshold 0.90): ~11M raw docs (27 GB) → ~8.9M (24.6 GB), then sub-domain balancing → ~2.3M (19 GB) |
 | **Casing** | Cased |
+| **Pretraining method** | Domain-adaptive pre-training (DAPT) — see [REPRODUCIBILITY.md](./REPRODUCIBILITY.md) |
 
 ## Why a Domain-Specific Tokenizer?
 
@@ -37,15 +38,19 @@ General Turkish tokenizers fragment legal terminology into meaningless subwords.
 ```
 hukukbert/
 ├── README.md                ← this file
+├── REPRODUCIBILITY.md       ← model config, parameter count, seed, DAPT recipe (Appendix F)
+├── config.json              ← exact Hugging Face model configuration
 ├── LICENSE                  ← Apache 2.0 (code)
 ├── LICENSE-DATA             ← CC BY 4.0 (benchmark data)
 ├── CITATION.cff             ← citation metadata
-└── benchmark/
-    ├── README.md            ← benchmark usage & detailed results
-    ├── data/
-    │   └── hukukbert_v1_cloze.jsonl  (750 cloze items)
-    └── scripts/
-        └── cloze_benchmark_test.py   (evaluation script)
+├── benchmark/
+│   ├── README.md            ← benchmark usage & detailed results
+│   ├── data/
+│   │   └── hukukbert_v1_cloze.jsonl  (750 cloze items)
+│   └── scripts/
+│       └── cloze_benchmark_test.py   (evaluation script)
+└── data/
+    └── SPLITS.md            ← data split spec & manifest template
 ```
 
 ### What's Included
@@ -53,18 +58,33 @@ hukukbert/
 - ✅ Cloze benchmark dataset (750 items, Turkish legal domain)
 - ✅ Evaluation script with confidence intervals
 - ✅ Full checkpoint results across training progression
+- ✅ Reproducibility docs: exact model config, parameter count, seed, the DAPT recipe, and the data-split spec (see [Reproducibility](#reproducibility))
 
 ### What's Not Included
 
 - ❌ Model weights (available for research collaboration — see below)
 - ❌ Tokenizer files
-- ❌ Training data or training pipeline
+- ❌ Training data / tokenized splits
+- ❌ Training code / pipeline — the configuration and DAPT recipe are documented in [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md), but the training scripts, helper modules, and keyword lexicon are not released
 
 ## Benchmark
 
 The benchmark is a cloze test for Turkish legal language modeling. Each item contains a legal sentence with a single `[MASK]` token, a set of candidate options, and one gold answer. Results are reported with Top-1 and Top-3 accuracy plus Wilson 95% confidence intervals.
 
 See [benchmark/README.md](benchmark/README.md) for usage instructions and [full checkpoint results](benchmark/README.md#checkpoint-results).
+
+## Reproducibility
+
+Documentation of the exact model configuration and the domain-adaptive
+pre-training "run of record", published in support of the paper's Data
+Availability Statement (Appendix F). This is **documentation only** — model
+weights, training code, and the training corpus are **not** released.
+
+| File | Purpose |
+|---|---|
+| [`config.json`](config.json) | Exact Hugging Face model configuration (architecture). |
+| [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | Architecture, exact parameter count (122,961,801), random seed, and the DAPT / masking recipe. |
+| [`data/SPLITS.md`](data/SPLITS.md) | Train / validation / test split specification and manifest template. |
 
 ## Downstream Applications
 
